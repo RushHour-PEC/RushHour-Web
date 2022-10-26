@@ -16,8 +16,7 @@ env.config();
 // mongodb connection
 mongoose
     .connect(
-        `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@democluster.pcssoj7.mongodb.net/?retryWrites=true&w=majority`,
-
+        `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_DATABASE}.c95i11j.mongodb.net/?retryWrites=true&w=majority`,
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
