@@ -9,6 +9,7 @@ const env = require('dotenv');
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
 const areaRoutes = require('./routes/area');
+const policeStationRoutes = require('./routes/policestation');
 
 env.config();
 
@@ -30,9 +31,14 @@ mongoose
 
 //middlewares
 app.use(express.json())
+
+
+
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/area', areaRoutes);
+app.use('/admin', policeStationRoutes);
+
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is up at port ${process.env.PORT}`);
