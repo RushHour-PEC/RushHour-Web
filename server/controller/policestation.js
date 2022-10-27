@@ -3,6 +3,20 @@ const PoliceStation = require("../models/policestation")
 const User = require("../models/user")
 const bcrypt = require("bcrypt");
 
+
+function generateRandomPassword(length) {
+
+    let result = "";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charLength = characters.length;
+
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charLength));
+
+    }
+    return result;
+
+}
 exports.addTrafficPoliceStation = async (req, res) => {
 
     const { stationName, areaId, address, contact, username } = req.body
@@ -17,16 +31,15 @@ exports.addTrafficPoliceStation = async (req, res) => {
         }
 
 
-        const password = (100000000000).toString(36);
+
+        const password = generateRandomPassword(10);
 
 
-
-        const val = sendUserPassword(username, password, res);
-
+        const val = await sendUserPassword(username, password);
 
         if (!val) {
             return res.status(500).json({
-                error: "Something went wrong. Please try again."
+                error: "Email could not be sent. Please try again."
             })
         }
 
@@ -88,11 +101,11 @@ exports.getTrafficPoliceStation = async (req, res) => {
             return res.status(404).json({ error: "No Police stations found" });
         }
 
-        res.status(200).json({ stations });
+        return res.status(200).json({ stations });
 
     } catch (err) {
 
-        res.status(400).json({ error: err.message });
+        return res.status(400).json({ error: err.message });
     }
 
 

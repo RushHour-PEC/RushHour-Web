@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 
 
-exports.sendUserPassword = (username, password, res) => {
+exports.sendUserPassword = async (username, password) => {
 
 
     const transporter = nodemailer.createTransport({
@@ -23,23 +23,21 @@ exports.sendUserPassword = (username, password, res) => {
         html: `   <p><b>Following are your Login Details:</b></p>
                       <p>Email : ${username}</p>
                       <p>Password : ${password}</p>
-                      <a href="http://localhost:3000/" target="_blank">Login</a><br/>
-                      Regards,
+                      <p>Please <a href="http://localhost:3000/" target="_blank">click here</a> to login</p>
+
+                      Regards,<br/>
                       Rush Hour
                     `,
     }
 
-    transporter.sendMail(mailOptions, (error, info) => {
-        let val = false;
-        if (error) {
+    const val = false;
+    const info = await transporter.sendMail(mailOptions);
 
-            console.log("Error " + error);
-            return val
-        }
+    if (info) {
         return !val;
+    }
 
-    })
-
+    return val
 
 
 

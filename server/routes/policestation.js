@@ -6,6 +6,6 @@ const router = express.Router();
 
 
 router.post("/add/trafficPoliceStation", requireSignin, adminMiddleware, addTrafficPoliceStation);
-router.get("/gettrafficPoliceStation", getTrafficPoliceStation);
+router.get("/getTrafficPoliceStations", getTrafficPoliceStation);
 
 module.exports = router;

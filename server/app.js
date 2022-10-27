@@ -10,6 +10,7 @@ const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
 const areaRoutes = require('./routes/area');
 const policeStationRoutes = require('./routes/policestation');
+// const videoRoutes = require('./routes/video');
 
 env.config();
 
@@ -33,11 +34,12 @@ mongoose
 app.use(express.json())
 
 
-
+// app.use('/public', express.static(path.join(__dirname, 'uploads')));
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/area', areaRoutes);
-app.use('/admin', policeStationRoutes);
+app.use('/station', policeStationRoutes);
+// app.use('/video', videoRoutes);
 
 
 app.listen(process.env.PORT, () => {

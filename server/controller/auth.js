@@ -2,7 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
 
-
+// for internal use only
 exports.signupUser = async (req, res) => {
 
     try {
@@ -46,7 +46,7 @@ exports.signupUser = async (req, res) => {
 
 };
 
-
+// for internal use only
 exports.signupAdmin = async (req, res) => {
 
     try {
@@ -62,6 +62,7 @@ exports.signupAdmin = async (req, res) => {
 
 
         const hash_password = await bcrypt.hash(req.body.password, 10);
+
         const _user = new User({
             ...req.body,
             hash_password,
@@ -94,7 +95,7 @@ exports.signin = async (req, res) => {
 
     try {
 
-        const user = await User.findOne({ email: req.body.email }).exec();
+        const user = await User.findOne({ email: req.body.email });
 
         if (!user) {
             res.status(404).json({
@@ -102,7 +103,8 @@ exports.signin = async (req, res) => {
             });
         }
 
-        if (user.authenticate(req.body.password)) {
+        const isMatch = await user.authenticate(req.body.password);
+        if (isMatch) {
 
             const token = await user.generateAuthToken();
             res.cookie("token", token, { expiresIn: "1d" });
@@ -129,7 +131,7 @@ exports.signin = async (req, res) => {
 
     } catch (err) {
 
-        res.status(500).json({ error: "Something went wrong. Please try again" })
+        return res.status(500).json({ error: "Something went wrong. Please try again" })
     }
 
 };
